@@ -20,11 +20,7 @@ func New(input string) *Lexer {
 }
 
 func (l *Lexer) readChar() {
-	if l.readPosition >= len(l.input) {
-		l.char = 0
-	} else {
-		l.char = l.input[l.readPosition]
-	}
+	l.char = l.peekChar()
 	l.position = l.readPosition
 	l.readPosition += 1
 }
@@ -39,6 +35,14 @@ func newToken(tokenType token.TokenType, char byte) token.Token {
 	return token.Token{
 		Type:    tokenType,
 		Literal: string(char),
+	}
+}
+
+func (l *Lexer) peekChar() byte {
+	if l.readPosition >= len(l.input) {
+		return 0
+	} else {
+		return l.input[l.readPosition]
 	}
 }
 
@@ -75,8 +79,17 @@ func (l *Lexer) NextToken() token.Token {
 	switch l.char {
 
 	case '=':
-		tok = newToken(token.ASSIGN, l.char)
-
+		if l.peekChar() == '=' {
+			char := l.char
+			l.readChar()
+			literal := string(char) + string(l.char)
+			tok = token.Token{
+				Type:    token.EQ,
+				Literal: literal,
+			}
+		} else {
+			tok = newToken(token.ASSIGN, l.char)
+		}
 	case '+':
 		tok = newToken(token.PLUS, l.char)
 	case '-':
@@ -87,11 +100,30 @@ func (l *Lexer) NextToken() token.Token {
 		tok = newToken(token.ASTERISK, l.char)
 
 	case '<':
-		tok = newToken(token.LT, l.char)
+		if l.peekChar() == '=' {
+			char := l.char
+			l.readChar()
+			literal := string(char) + string(l.char)
+			tok = token.Token{
+				Type:    token.LTE,
+				Literal: literal,
+			}
+		} else {
+			tok = newToken(token.LT, l.char)
+		}
 
 	case '>':
-		tok = newToken(token.GT, l.char)
-
+		if l.peekChar() == '=' {
+			char := l.char
+			l.readChar()
+			literal := string(char) + string(l.char)
+			tok = token.Token{
+				Type:    token.GTE,
+				Literal: literal,
+			}
+		} else {
+			tok = newToken(token.GT, l.char)
+		}
 	case '(':
 		tok = newToken(token.LPAREN, l.char)
 	case ')':
@@ -109,8 +141,17 @@ func (l *Lexer) NextToken() token.Token {
 		tok = newToken(token.SEMICOLON, l.char)
 
 	case '!':
-		tok = newToken(token.BANG, l.char)
-
+		if l.peekChar() == '=' {
+			char := l.char
+			l.readChar()
+			literal := string(char) + string(l.char)
+			tok = token.Token{
+				Type:    token.NOT_EQ,
+				Literal: literal,
+			}
+		} else {
+			tok = newToken(token.BANG, l.char)
+		}
 	case 0:
 		tok.Literal = ""
 		tok.Type = token.EOF
