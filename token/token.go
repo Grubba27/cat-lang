@@ -1,5 +1,9 @@
 package token
 
+// TODO: List of tokens that I want to add
+// <- : syntax sugar to { expr; } : easy
+// |> : pipe operator similar to F# :  hard
+
 type TokenType string
 
 type Token struct {
@@ -55,8 +59,13 @@ const (
 )
 
 var keywords = map[string]TokenType{
-	"fn":  FUNCTION,
-	"let": LET,
+	"fn":     FUNCTION,
+	"let":    LET,
+	"true":   TRUE,
+	"false":  FALSE,
+	"if":     IF,
+	"else":   ELSE,
+	"return": RETURN,
 }
 
 func LookupIdentifier(identifier string) TokenType {
