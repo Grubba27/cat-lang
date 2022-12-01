@@ -177,7 +177,7 @@ func TestNextTokenBooleanDoubleTokenExpressions(t *testing.T) {
 		{token.SEMICOLON, ";"},
 
 		{token.INT, "12"},
-		{token.GTE, "<="},
+		{token.GTE, ">="},
 		{token.INT, "9"},
 		{token.SEMICOLON, ";"},
 
