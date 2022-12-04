@@ -2,6 +2,7 @@ package token
 
 // TODO: List of tokens that I want to add
 // <- : syntax sugar to { expr; } : easy
+// using keyword for context narrowing : medium
 // |> : pipe operator similar to F# :  hard
 
 type TokenType string
