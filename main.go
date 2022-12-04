@@ -1,7 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"cat/console/color"
+	"fmt"
+)
 
 func main() {
-	fmt.Printf("hello")
+	fmt.Printf(color.Colorize("Hello", color.Red))
 }
