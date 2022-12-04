@@ -9,7 +9,7 @@ import (
 	"io"
 )
 
-const PROMPT = ">>🐱 "
+const PROMPT = ">> "
 
 func Start(i io.Reader, o io.Writer) {
 	scanner := bufio.NewScanner(i)
