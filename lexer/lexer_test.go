@@ -2,7 +2,7 @@ package lexer
 
 // TODO: add filenames and linenumbers to tokens
 import (
-	testingLib "cat/test"
+	asserter "cat/test"
 	"cat/token"
 	"testing"
 )
@@ -26,7 +26,7 @@ func TestNextToken(t *testing.T) {
 	lexer := New(input)
 	for i, test := range tests {
 		tok := lexer.NextToken()
-		assert := testingLib.New(t)
+		assert := asserter.New(t)
 
 		assert.
 			WithIndex(i).
@@ -110,12 +110,19 @@ let result = add(five,ten);
 	lexer := New(input)
 	for i, test := range tests {
 		tok := lexer.NextToken()
-		if tok.Type != test.expectedType {
-			t.Fatalf("Tests[%d] - tokentype wrong. expected=%q, got=%q", i, test.expectedType, tok.Type)
-		}
-		if tok.Literal != test.expectedLiteral {
-			t.Fatalf("Tests[%d] - literal wrong. expected=%q, got=%q", i, test.expectedLiteral, tok.Literal)
-		}
+		assert := asserter.New(t)
+
+		assert.
+			WithIndex(i).
+			WithName("tokentype wrong.").
+			That(string(tok.Type)).
+			ToBe(string(test.expectedType))
+
+		assert.
+			WithIndex(i).
+			WithName("literal wrong.").
+			That(tok.Literal).
+			ToBe(test.expectedLiteral)
 	}
 }
 func TestNextTokenBooleanOneTokenExpressions(t *testing.T) {
@@ -195,12 +202,19 @@ func TestNextTokenBooleanDoubleTokenExpressions(t *testing.T) {
 	lexer := New(input)
 	for i, test := range tests {
 		tok := lexer.NextToken()
-		if tok.Type != test.expectedType {
-			t.Fatalf("Tests[%d] - tokentype wrong. expected=%q, got=%q", i, test.expectedType, tok.Type)
-		}
-		if tok.Literal != test.expectedLiteral {
-			t.Fatalf("Tests[%d] - literal wrong. expected=%q, got=%q", i, test.expectedLiteral, tok.Literal)
-		}
+		assert := asserter.New(t)
+
+		assert.
+			WithIndex(i).
+			WithName("tokentype wrong.").
+			That(string(tok.Type)).
+			ToBe(string(test.expectedType))
+
+		assert.
+			WithIndex(i).
+			WithName("literal wrong.").
+			That(tok.Literal).
+			ToBe(test.expectedLiteral)
 	}
 }
 func TestNextTokenIFExpressions(t *testing.T) {
@@ -241,11 +255,18 @@ if (5 < 10) {
 	lexer := New(input)
 	for i, test := range tests {
 		tok := lexer.NextToken()
-		if tok.Type != test.expectedType {
-			t.Fatalf("Tests[%d] - tokentype wrong. expected=%q, got=%q", i, test.expectedType, tok.Type)
-		}
-		if tok.Literal != test.expectedLiteral {
-			t.Fatalf("Tests[%d] - literal wrong. expected=%q, got=%q", i, test.expectedLiteral, tok.Literal)
-		}
+		assert := asserter.New(t)
+
+		assert.
+			WithIndex(i).
+			WithName("tokentype wrong.").
+			That(string(tok.Type)).
+			ToBe(string(test.expectedType))
+
+		assert.
+			WithIndex(i).
+			WithName("literal wrong.").
+			That(tok.Literal).
+			ToBe(test.expectedLiteral)
 	}
 }
