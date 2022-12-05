@@ -16,7 +16,7 @@ func TestNextToken(t *testing.T) {
 		{token.ASSIGN, "="},
 		{token.PLUS, "+"},
 		{token.LPAREN, "("},
-		{token.RPAREN, "k"},
+		{token.RPAREN, ")"},
 		{token.LBRACE, "{"},
 		{token.RBRACE, "}"},
 		{token.COMMA, ","},
@@ -31,13 +31,11 @@ func TestNextToken(t *testing.T) {
 		assert.
 			WithIndex(i).
 			WithName("tokentype wrong.").
-			WithLog().
 			That(string(tok.Type)).
 			ToBe(string(test.expectedType))
 
 		assert.
 			WithIndex(i).
-			WithLog().
 			WithName("literal wrong.").
 			That(tok.Literal).
 			ToBe(test.expectedLiteral)
