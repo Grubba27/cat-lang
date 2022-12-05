@@ -7,8 +7,6 @@ import (
 	"testing"
 )
 
-//"Tests[%d] - tokentype wrong. expected=%q, got=%q"
-
 type Asserter struct {
 	t        *testing.T
 	testLog  string
