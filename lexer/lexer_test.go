@@ -2,12 +2,12 @@ package lexer
 
 // TODO: add filenames and linenumbers to tokens
 import (
+	testingLib "cat/test"
 	"cat/token"
 	"testing"
 )
 
 func TestNextToken(t *testing.T) {
-
 	input := `=+(){},;`
 	tests := []struct {
 		expectedType    token.TokenType
@@ -16,7 +16,7 @@ func TestNextToken(t *testing.T) {
 		{token.ASSIGN, "="},
 		{token.PLUS, "+"},
 		{token.LPAREN, "("},
-		{token.RPAREN, ")"},
+		{token.RPAREN, "k"},
 		{token.LBRACE, "{"},
 		{token.RBRACE, "}"},
 		{token.COMMA, ","},
@@ -26,12 +26,22 @@ func TestNextToken(t *testing.T) {
 	lexer := New(input)
 	for i, test := range tests {
 		tok := lexer.NextToken()
-		if tok.Type != test.expectedType {
-			t.Fatalf("Tests[%d] - tokentype wrong. expected=%q, got=%q", i, test.expectedType, tok.Type)
-		}
-		if tok.Literal != test.expectedLiteral {
-			t.Fatalf("Tests[%d] - literal wrong. expected=%q, got=%q", i, test.expectedLiteral, tok.Literal)
-		}
+		assert := testingLib.New(t)
+
+		assert.
+			WithIndex(i).
+			WithName("tokentype wrong.").
+			WithLog().
+			That(string(tok.Type)).
+			ToBe(string(test.expectedType))
+
+		assert.
+			WithIndex(i).
+			WithLog().
+			WithName("literal wrong.").
+			That(tok.Literal).
+			ToBe(test.expectedLiteral)
+
 	}
 }
 func TestNextTokenSmallProgram(t *testing.T) {
