@@ -1,9 +1,9 @@
 package main
 
 import (
-	"cat/console/color"
 	"cat/console/repl"
 	"fmt"
+	"github.com/Grubba27/painter"
 	"os"
 	"os/user"
 )
@@ -14,8 +14,7 @@ func main() {
 		panic(err)
 	}
 	fmt.Printf("Hello %s! Welcome to the Cat lang REPL 🐱\n", u.Username)
-	fmt.Printf(
-		color.Colorize("Start typing some code to see awesome things \n",
-			color.Purple))
+	t := paint.InPurple("Some text \n")
+	fmt.Printf(t)
 	repl.Start(os.Stdin, os.Stdout)
 }

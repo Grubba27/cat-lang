@@ -1,9 +1,9 @@
 package test
 
 import (
-	"cat/console/color"
 	"encoding/json"
 	"fmt"
+	"github.com/Grubba27/painter"
 	"testing"
 )
 
@@ -46,20 +46,20 @@ func (a *Asserter) ToBe(cond2 string) {
 			}
 			fmt.Println(string(l))
 		}
-		expect := color.Colorize(fmt.Sprintf(" expected=%q,", a.cond1), color.Green)
-		got := color.Colorize(fmt.Sprintf(" got=%q", a.cond2), color.Red)
+		expect := paint.InGreen(fmt.Sprintf(" expected=%q,", a.cond1))
+		got := paint.InRed(fmt.Sprintf(" got=%q", a.cond2))
 		log := a.testLog + a.testName + expect + got
 		a.t.Fatalf(log)
 	}
 }
 
 func (a *Asserter) WithName(name string) *Asserter {
-	a.testName = color.Colorize(name, color.Cyan)
+	a.testName = paint.InCyan(name)
 	return a
 }
 
 func (a *Asserter) WithIndex(number int) *Asserter {
-	a.testLog = color.Colorize(fmt.Sprintf("Tests[%d] - ", number), color.Yellow)
+	a.testLog = paint.InYellow(fmt.Sprintf("Tests[%d] - ", number))
 	return a
 }
 

@@ -2,10 +2,10 @@ package repl
 
 import (
 	"bufio"
-	"cat/console/color"
 	"cat/lexer"
 	"cat/token"
 	"fmt"
+	paint "github.com/Grubba27/painter"
 	"io"
 )
 
@@ -15,7 +15,7 @@ func Start(i io.Reader, o io.Writer) {
 	scanner := bufio.NewScanner(i)
 	for {
 		_, err :=
-			fmt.Fprintf(o, color.Colorize(PROMPT, color.Yellow))
+			fmt.Fprintf(o, paint.InYellow(PROMPT))
 
 		if err != nil {
 			return
@@ -30,7 +30,7 @@ func Start(i io.Reader, o io.Writer) {
 		l := lexer.New(line)
 		for t := l.NextToken(); t.Type != token.EOF; t = l.NextToken() {
 			_, err :=
-				fmt.Fprintf(o, color.Colorize("%+v\n", color.White), t)
+				fmt.Fprintf(o, paint.InWhite("%+v\n"), t)
 
 			if err != nil {
 				return
