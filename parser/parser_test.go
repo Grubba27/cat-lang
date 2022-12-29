@@ -9,7 +9,9 @@ import (
 func TestLetStatementSimple(t *testing.T) {
 	input := `
 let x = 5;
+	
 let y = 10;
+	
 let foobar = 838383;
 
 `
@@ -39,14 +41,16 @@ let foobar = 838383;
 	}
 }
 
-func testLetStatement(t *testing.T, ast ast.Statement, name string) bool {
-	if ast.TokenLiteral() != "let" {
-		t.Errorf("Current token literal is not let. got=%q", ast.TokenLiteral())
+func testLetStatement(t *testing.T, s ast.Statement, name string) bool {
+
+	if s.TokenLiteral() != "let" {
+		t.Errorf("Current token literal is not let. got=%q", s.TokenLiteral())
 		return false
 	}
-	let, ok := ast.(*ast.LetStatment)
+
+	let, ok := s.(*ast.LetStatement)
 	if !ok {
-		t.Errorf("s not *ast.LetStatement. got=%T", ast)
+		t.Errorf("s not *ast.LetStatement. got=%T", s)
 		return false
 	}
 
